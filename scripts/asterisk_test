@@ -1,0 +1,1 @@
+/usr/sbin/asterisk -rx 'iax2 show channels' | grep IAX2 | wc | awk '{ print $1 }'

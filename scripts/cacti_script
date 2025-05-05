@@ -1,0 +1,2 @@
+#!/bin/bash
+ssh root@10.3.3.48 'bash -s' </usr/share/cacti/scripts/asterisk_test

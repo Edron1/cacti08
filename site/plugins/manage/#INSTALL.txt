@@ -1,0 +1,67 @@
+
+this version is designed for cacti 0.8.7g
+you need Plugin Architecture (PA) 2.8/2.9 (http://cactiusers.org)
+you need appropriates templates :
+  - Services template is necessary to monitor windows services
+  http://forums.cacti.net/viewtopic.php?t=11232&start=0&postdays=0&postorder=asc&highlight= (include in Cacti 0.8.7)
+  - TCP Port template
+  http://forums.cacti.net/about16477.html
+  - process template is now included in cacti
+you need settings plugin to send emails (0.7)
+plugin Thold is optional
+
+notes :
+  - sometimes, services template needs patch of mories
+  http://forums.cacti.net/viewtopic.php?p=67694&sid=7cf0c483113ade565ccbdd42add64218#67694
+  - ALWAYS assign your host to a site and a group, even if you don't use "Site view"
+  - verify mysql is not in strict mode
+  - select "Ping and SNMP" for SNMP enabled host, "Ping" for a host which is reachable, "None" for others
+  - don't use same names in /include/manage_process.inc and /include/win_services.inc.
+  - for direct linking to tab Manage, use this link http://your-server/cacti/plugins/manage/manage_direct.php
+  - to configure a device or modify templates, user must have "Update Data Sources" rights
+  - for receive messages, try LanTalk XP, better than windows
+  
+  
+INSTALL :
+
+install like any other plugin :
+- put the manage directory and all files into the plugins directory
+- login to cacti as an admin with full permissions
+- install the plugin in cacti :
+  go to "Console -> Plugin Management"
+  then "Plugin Management"
+  click "install" link
+  click "enable" link
+- use manage :
+  go to "Console -> User Management"
+  then "Realm Permissions"
+  check "Use PHP Network Managing"
+  save
+- you can find the plugin options in settings
+
+first, click the debug link to verify that all yours tables are OK
+if it's not OK, use the sql scripts provided
+
+UNDER THIS PART IS OBSOLETE, NEED REWRITE -------------------------------------
+"Method to test connexion with host" : choose "SNMP (Uptime check)" to manage the device
+"Type of poller" : choose "Cacti poller"
+"Manage performance" : choose "Cacti"
+"Use Windows patch" : just select "No"
+"Enable mail alerts" : choose Events (it will use Settings to send mail)
+"Global e-mail to sending alerts" : put an email
+"Enable 'net send' alerts" : choose Events
+"Stations that will receive 'net send' alerts" : example PC003253
+"'net send' method" : choose between Windows command "net send" and perl module (need some extensions)
+(if your server is Win32, just select Windows choice)
+"Perl Binary Path" : write path of binary Perl
+
+
+go to Management
+Open a device
+Check "Manage host"
+Use the appropriates templates to create Data Sources for TCP ports, Windows Services and Windows Process
+Save
+
+
+go to tab Manage
+wait 10 minutes and click refresh

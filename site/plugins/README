@@ -1,0 +1,48 @@
+/*******************************************************************************
+
+    Author ......... Jimmy Conner
+    Contact ........ jimmy@sqmail.org
+    Home Site ...... http://cactiusers.org
+    Program ........ Plugin Architecture
+    Version ........ 3.0
+    Purpose ........ Provides users with the ability to write or use plugins with Cacti
+
+*******************************************************************************/
+
+
+----[ Installation ]
+
+    Apply this patch to a freshly installed cacti installation, before configuring Cacti
+    If you use this patch with a RPM distribution, instead of from source, then you may
+    encounter errors with the patching (most likely in global.php).  If so, then please use
+    the already patched files that are included with this.
+
+    Drop the patch into your cacti directory, and then use this command on unix
+    to patch your cacti files.
+
+    patch -p1 -N < cacti-plugin-0.8.7g-PA-v2.8.diff
+
+    Edit your includes/global.php and add a plugin to the $plugins list
+
+    Then you will need to import the pa.sql file into your mysql database.
+
+    More detailed documentation on installation can be found at
+    http://cactiusers.org/wiki/PluginArchitectureInstall
+    
+ ----[ ChangeLog ]
+    --- SVN ---
+	feature: Add hooks for removing Devices, Graphs, Data Sources and Users
+	bug: Prevent searching on Data Sources page from showing odd characters
+	bug: Reduce default font sizes
+	bug: Escape some commands
+
+    --- 2.9 ---
+    bug#0001802: Plugins That Do Not Contain Keys Generate Errors
+    bug#0001822: Always forward to invalid URL, Browser display "The webpage cannot be found" 
+    bug: Over aggressive htmlspecialchars in data_sources.php
+    bug: PIA 1.x plugins installed can not be upgraded to PIA 2.x plugins
+    feature: Add new interface reskinning option
+    note: Compatible with 0.8.7g Only
+    
+    --- 2.8 ---
+    note: Compatible with 0.8.7f/g Only

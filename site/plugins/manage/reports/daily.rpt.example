@@ -1,0 +1,8 @@
+1,2,3,4,5               #day of week, 1=monday..., you can choose multiples days
+01:00                   #hour
+email1@domain,9         #email (or cacti user id if you use plugin Thold)
+14,22                   #cacti hosts ids, 0=all
+
+
+
+IMPORTANT : REMOVE COMMENTARY (#)

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: de/mud/jta/Main
+Created-By: Matthias L. Jugel & Marcus Meißner (c) 1996-2000
+

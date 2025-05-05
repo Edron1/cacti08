@@ -1,0 +1,8 @@
+title1#00418C
+text1#FFFFFF
+title2#6B8AAD
+text2#FFFFFF
+text3#000000
+link#0000FF
+altern1#F7F7F7
+altern2#E7EBF7
