@@ -1876,7 +1876,11 @@ function draw_navigation_text($type = "url") {
 	$title       .= htmlspecialchars(resolve_navigation_variables($current_array["title"] ?? ""));
 
 	/* keep a cache for each level we encounter */
-	$nav_level_cache[$current_array["level"] ?? "default"] = array("id" => $current_page . ":" . $current_action, "url" => get_browser_query_string());
+    $nav_level_cache = is_array($nav_level_cache) ? $nav_level_cache : $nav_level_cache = array();
+	$nav_level_cache[$current_array["level"] ?? "default"] = array(
+            "id" => $current_page . ":" . $current_action,
+            "url" => get_browser_query_string()
+    );
 	$_SESSION["sess_nav_level_cache"] = $nav_level_cache;
 
 	if ($type == "url") {
