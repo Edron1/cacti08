@@ -105,7 +105,7 @@ case 'view':
 					<table width='1' cellpadding='0'>
 						<tr>
 							<td>
-								<img class='graphimage' id='graph_<?php print $_REQUEST["local_graph_id"] ?>' src='<?php print htmlspecialchars("graph_image.php?action=view&local_graph_id=" . $_REQUEST["local_graph_id"] . "&rra_id=" . $rra["id"]);?>' border='0' alt='<?php print htmlspecialchars($graph_title, ENT_QUOTES);?>'>
+                                <img class='graphimage' id='graph_<?php print $_REQUEST["local_graph_id"] ?>' src='<?php print htmlspecialchars("graph_image.php?action=view&local_graph_id=" . $_REQUEST["local_graph_id"] . "&rra_id=" . $rra["id"]);?>' border='0' alt='<?php print htmlspecialchars($graph_title, ENT_QUOTES);?>'>
 							</td>
 							<td valign='top' style='padding: 3px;' class='noprint'>
 								<a href='<?php print htmlspecialchars("graph.php?action=zoom&local_graph_id=" . $_REQUEST["local_graph_id"]. "&rra_id=" . $rra["id"] . "&view_type=" . $_REQUEST["view_type"] . "&graph_start=" . $graph_start . "&graph_end=" . $graph_end);?>'><img src='images/graph_zoom.gif' border='0' alt='Zoom Graph' title='Zoom Graph' style='padding: 3px;'></a><br>
@@ -145,12 +145,8 @@ case 'zoom':
 	/* fetch information for the current RRA */
 	$rra = db_fetch_row("select id,timespan,steps,name from rra where id=" . $_REQUEST["rra_id"]);
 
-    /*if (!is_array($rra)) {
-        die("Error: RRA_ID " . htmlspecialchars($_REQUEST["rra_id"]) . " nor finded.");
-    }*/
 
-	/* define the time span, which decides which rra to use */
-	$timespan = -($rra["timespan"]);
+    $timespan = isset($rra["timespan"]) ? -$rra["timespan"] : 0;
 
 	/* find the step and how often this graph is updated with new data */
 	$ds_step = db_fetch_cell("SELECT
@@ -161,7 +157,7 @@ case 'zoom':
 		AND graph_templates_item.local_graph_id=" . $_REQUEST["local_graph_id"] .
 		" LIMIT 0,1");
 	$ds_step = empty($ds_step) ? 300 : $ds_step;
-	$seconds_between_graph_updates = ($ds_step * $rra["steps"]);
+	$seconds_between_graph_updates = $ds_step * ($rra["steps"] ?? 1);
 
 	$now = time();
 

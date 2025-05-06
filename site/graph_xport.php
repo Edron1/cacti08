@@ -108,17 +108,14 @@ if (!isset($_GET["stdout"])) {
 }
 
 if (is_array($xport_array["meta"])) {
-	print_r($graph_info);
-	print "===================\n";
-	print_r($xport_array);
-	print '"Title:","'          . $xport_array["meta"]["title_cache"]                       . '"' . "\n";
-	print '"Vertical Label:","' . $xport_array["meta"]["vertical_label"]                    . '"' . "\n";
-	print '"Start Date:","'     . date("Y-m-d H:i:s", $xport_array["meta"]["start"]) . '"' . "\n";
-	print '"End Date:","'       . date("Y-m-d H:i:s", $xport_array["meta"]["end"])   . '"' . "\n";
-	print '"Step:","'           . $xport_array["meta"]["step"]                              . '"' . "\n";
-	print '"Total Rows:","'     . $xport_array["meta"]["rows"]                              . '"' . "\n";
-	print '"Graph ID:","'       . $xport_array["meta"]["local_graph_id"]                    . '"' . "\n";
-	print '"Host ID:","'        . $xport_array["meta"]["host_id"]                           . '"' . "\n";
+	print '"Title:","'          . $xport_array["meta"]["title_cache"]                                                                          . '"' . "\n";
+	print '"Vertical Label:","' . $xport_array["meta"]["vertical_label"]                                                                       . '"' . "\n";
+	print '"Start Date:","'     . date("Y-m-d H:i:s", ($xport_array["meta"]["start"]) ?? 0)   . '"' . "\n";
+	print '"End Date:","'       . date("Y-m-d H:i:s", ($xport_array["meta"]["end"]) ?? 0)       . '"' . "\n";
+	print '"Step:","'           . $xport_array["meta"]["steps"]                                                                      . '"' . "\n";
+	print '"Total Rows:","'     . $xport_array["meta"]["rows"]                                                                      . '"' . "\n";
+	print '"Graph ID:","'       . $xport_array["meta"]["local_graph_id"]                                                                       . '"' . "\n";
+	print '"Host ID:","'        . $xport_array["meta"]["host_id"]                                                                              . '"' . "\n";
 
 	if (isset($xport_meta["NthPercentile"])) {
 		foreach($xport_meta["NthPercentile"] as $item) {
@@ -134,13 +131,15 @@ if (is_array($xport_array["meta"])) {
 	print '""' . "\n";
 
 	$header = '"Date"';
-	for($i=1;$i<=$xport_array["meta"]["columns"];$i++) {
-		$header .= ',"' . $xport_array["meta"]["legend"]["col" . $i] . '"';
+	if (isset ($xport_array["meta"]["columns"])) {
+		for($i=1;$i<=$xport_array["meta"]["columns"];$i++) {
+			$header .= ',"' . $xport_array["meta"]["legend"]["col" . $i] . '"';
+		}
+		print $header . "\n";
 	}
-	print $header . "\n";
 }
 
-if (is_array($xport_array["data"])) {
+if (isset($xport_array["data"]) AND is_array($xport_array["data"])) {
 	foreach($xport_array["data"] as $row) {
 		$data = '"' . date("Y-m-d H:i:s", $row["timestamp"]) . '"';
 		for($i=1;$i<=$xport_array["meta"]["columns"];$i++) {

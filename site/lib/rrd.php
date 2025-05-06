@@ -628,10 +628,11 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 			}
 		}
 	}else{
-		$rra = db_fetch_row("select timespan,rows,steps from rra where id=$rra_id");
+		$rra = db_fetch_row("select `timespan`, `rows`, `steps` from rra where id=". $rra_id);
 	}
 
-	$seconds_between_graph_updates = ($ds_step * $rra["steps"]);
+
+	$seconds_between_graph_updates = ($ds_step * ($rra["steps"] ?? 1));
 
 	$graph = db_fetch_row("select
 		graph_local.id AS local_graph_id,
@@ -1482,6 +1483,7 @@ function rrdtool_function_xport($local_graph_id, $rra_id, $xport_data_array, &$x
 		and data_template_rrd.local_data_id=data_template_data.local_data_id
 		and graph_templates_item.local_graph_id=$local_graph_id
 		limit 0,1");
+
 	$ds_step = empty($ds_step) ? 300 : $ds_step;
 
 	/* if no rra was specified, we need to figure out which one RRDTool will choose using
@@ -1518,7 +1520,7 @@ function rrdtool_function_xport($local_graph_id, $rra_id, $xport_data_array, &$x
 			}
 		}
 	}else{
-		$rra = db_fetch_row("select timespan,rows,steps from rra where id=$rra_id");
+		$rra = db_fetch_row("select `timespan`,`rows`,`steps` from rra where id=$rra_id");
 	}
 
 	$seconds_between_graph_updates = ($ds_step * $rra["steps"]);
@@ -2016,6 +2018,8 @@ function rrdtool_function_xport($local_graph_id, $rra_id, $xport_data_array, &$x
 	$xport_array = rrdxport2array(rrdtool_execute("xport $xport_opts$xport_defs$txt_xport_items", false, $output_flag));
 
 	/* add host and graph information */
+	$xport_array["meta"]["steps"]= $rra['steps'];
+	$xport_array["meta"]["rows"]= $rra['rows'];
 	$xport_array["meta"]["stacked_columns"]= $stacked_columns;
 	$xport_array["meta"]["title_cache"]    = cacti_escapeshellarg($graph["title_cache"]);
 	$xport_array["meta"]["vertical_label"] = cacti_escapeshellarg($graph["vertical_label"]);
