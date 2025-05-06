@@ -73,7 +73,7 @@ function manage_form_actions() {
 
   include_once("./include/top_header.php");
 
-  html_start_box("<strong>" . $device_actions{$_POST["drp_action"]} . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
+  html_start_box("<strong>" . $device_actions[$_POST["drp_action"]] . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
 
   print "<form action='manage_templates.php' method='post'>\n";
 
@@ -123,12 +123,20 @@ function manage_host() {
 	  <td width=250>
 	  <?php
 	  print "<a class='linkEditMain' href='manage_templates.php?edit=1&id=".$host["id"]."'>";
-	  print eregi_replace("(" . preg_quote($_REQUEST["filter_templates"]) . ")", "<span style='background-color: #F8D93D;'>\\1</span>", $host["name"]);
+	  print preg_replace(
+      "/(" . preg_quote($_REQUEST["filter_templates"], '/') . ")/i", 
+      "<span style='background-color: #F8D93D;'>\\1</span>", 
+      $host["name"]
+  );  
 	  print "<a class='linkEditMain' href='manage_templates.php?edit=1&id=".$host["tcp_ports"]."'></td>";
 	  ?>
       <td>
 	  <?php
-	  print eregi_replace("(" . preg_quote($_REQUEST["filter_templates"]) . ")", "<span style='background-color: #F8D93D;'>\\1</span>", $host["tcp_ports"]);
+	  print preg_replace(
+      "/(" . preg_quote($_REQUEST["filter_templates"], '/') . ")/i", 
+      "<span style='background-color: #F8D93D;'>\\1</span>", 
+      $host["tcp_ports"]
+  );  
 	  ?>
 	  </td>
 	  <td style="<?php print get_checkbox_style();?>" width="1%" align="right">

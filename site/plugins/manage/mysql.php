@@ -96,6 +96,9 @@ if (!extension_loaded('mysql') && !function_exists('mysql_connect')) {
 	 */
 	function mysql_query($query, mysqli $mysqli = null)
 	{
+		if (empty($query)) {
+			throw new Exception("Пустой SQL-запрос передан в mysql.php");
+		}
 		return getLinkIdentifier($mysqli)->query($query);
 	}
 

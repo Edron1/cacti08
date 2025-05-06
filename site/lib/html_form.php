@@ -618,11 +618,13 @@ function form_multi_dropdown($form_name, $array_display, $sql_previous_values, $
 	foreach (array_keys($array_display) as $id) {
 		print "<option value='" . $id . "'";
 
-		for ($i=0; ($i < count($sql_previous_values)); $i++) {
-			if ($sql_previous_values[$i][$column_id] == $id) {
-				print " selected";
+		if (is_array($sql_previous_values)) {
+			for ($i=0; ($i < count($sql_previous_values)); $i++) {
+				if ($sql_previous_values[$i][$column_id] == $id) {
+					print " selected";
+				}
 			}
-		}
+		}		
 
 		print ">". htmlspecialchars($array_display[$id],ENT_QUOTES);
 		print "</option>\n";

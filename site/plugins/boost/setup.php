@@ -296,7 +296,7 @@ function boost_display_run_status() {
 		$max_data_length = $table["MAX_DATA_LENGTH"];
 	}
 	$total_records = $pending_records + $arch_records;
-	$avg_row_length = intval($data_length / $total_records);
+	$avg_row_length = ($total_records > 0) ? intval($data_length / $total_records) : 0;
 
 	$total_data_sources = db_fetch_cell("SELECT COUNT(*) FROM poller_item");
 
@@ -446,7 +446,7 @@ function boost_display_run_status() {
 		$max_table_records = "Unlimited";
 	}else{
 		$max_table_allowed = boost_file_size_display($max_data_length, 2);
-		$max_table_records = round($max_data_length/$avg_row_length, 0);
+		$max_table_records = ($avg_row_length > 0) ? round($max_data_length / $avg_row_length, 0) : 0;
 	}
 	print "<td><strong>Max Allowed Boost Table Size:</strong></td><td>" . $max_table_allowed . "</td>";
 
@@ -553,7 +553,7 @@ function boost_utilities_list() {
 	<?php
 }
 
-function boost_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
+function boost_error_handler($errno, $errmsg, $filename, $linenum) {
 	if (read_config_option("log_verbosity") >= POLLER_VERBOSITY_DEBUG) {
 		/* define all error types */
 		$errortype = array(
@@ -983,7 +983,7 @@ function boost_timer($area, $type) {
 	global $boost_stats_log;
 
 	/* get the time */
-	list($micro,$seconds) = split(" ", microtime());
+	list($micro,$seconds) = explode(" ", microtime());
 	$btime = $seconds + $micro;
 
 	if ($type == BOOST_TIMER_START) {

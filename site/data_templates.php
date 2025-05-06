@@ -227,13 +227,13 @@ function form_save() {
 
 					if (isset($_POST[$form_value])) {
 						/* save the data into the 'host_template_data' table */
-						if (isset($_POST{"t_value_" . $input_field["data_name"]})) {
+						if (isset($_POST["t_value_" . $input_field["data_name"]])) {
 							$template_this_item = "on";
 						}else{
 							$template_this_item = "";
 						}
 
-						if ((!empty($form_value)) || (!empty($_POST{"t_value_" . $input_field["data_name"]}))) {
+						if ((!empty($form_value)) || (!empty($_POST["t_value_" . $input_field["data_name"]]))) {
 							db_execute("insert into data_input_data (data_input_field_id,data_template_data_id,t_value,value)
 								values (" . $input_field["id"] . "," . $data_template_data_id . "," . $cnn_id->qstr($template_this_item) . "," . $cnn_id->qstr(trim($_POST[$form_value])) . ")");
 						}
@@ -316,7 +316,7 @@ function form_actions() {
 
 	include_once("./include/top_header.php");
 
-	html_start_box("<strong>" . $ds_actions{$_POST["drp_action"]} . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
+	html_start_box("<strong>" . $ds_actions[$_POST["drp_action"]] . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
 
 	print "<form action='data_templates.php' method='post'>\n";
 
@@ -454,7 +454,7 @@ function template_edit() {
 			$form_array[$field_name]["sub_checkbox"] = array(
 				"name" => "t_" . $field_name,
 				"friendly_name" => "Use Per-Data Source Value (Ignore this Value)",
-				"value" => (isset($template_data{"t_" . $field_name}) ? $template_data{"t_" . $field_name} : "")
+				"value" => (isset($template_data["t_" . $field_name]) ? $template_data["t_" . $field_name] : "")
 				);
 		}
 
@@ -544,7 +544,7 @@ function template_edit() {
 		$form_array[$field_name]["sub_checkbox"] = array(
 			"name" => "t_" . $field_name,
 			"friendly_name" => "Use Per-Data Source Value (Ignore this Value)",
-			"value" => (isset($template_rrd) ? $template_rrd{"t_" . $field_name} : "")
+			"value" => (isset($template_rrd) ? $template_rrd["t_" . $field_name] : "")
 			);
 	}
 
@@ -576,7 +576,7 @@ function template_edit() {
 		foreach ($fields as $field) {
 			$data_input_data = db_fetch_row("select t_value,value from data_input_data where data_template_data_id=" . $template_data["id"] . " and data_input_field_id=" . $field["id"]);
 
-			if (sizeof($data_input_data) > 0) {
+			if (!empty($data_input_data) && is_array($data_input_data)) {
 				$old_value = $data_input_data["value"];
 			}else{
 				$old_value = "";
@@ -584,12 +584,26 @@ function template_edit() {
 
 			form_alternate_row_color($colors["form_alternate1"],$colors["form_alternate2"],$i); ?>
 				<td width="50%">
-					<strong><?php print $field["name"];?></strong><br>
-					<?php form_checkbox("t_value_" . $field["data_name"], $data_input_data["t_value"], "Use Per-Data Source Value (Ignore this Value)", "", "", $_GET["id"]);?>
+									<strong><?php print $field["name"];?></strong><br>
+									<?php form_checkbox(
+					"t_value_" . $field["data_name"],
+					isset($data_input_data["t_value"]) ? $data_input_data["t_value"] : "",
+					"Use Per-Data Source Value (Ignore this Value)",
+					"",
+					"",
+					$_GET["id"]
+				); ?>
 				</td>
 				<td>
 					<?php form_text_box("value_" . $field["data_name"],$old_value,"","");?>
-					<?php if ((preg_match('/^' . VALID_HOST_FIELDS . '$/i', $field["type_code"])) && ($data_input_data["t_value"] == "")) { print "<br><em>Value will be derived from the host if this field is left empty.</em>\n"; } ?>
+					<?php
+						if (
+							(preg_match('/^' . VALID_HOST_FIELDS . '$/i', $field["type_code"])) &&
+							(empty($data_input_data["t_value"]))
+						) {
+							print "<br><em>Value will be derived from the host if this field is left empty.</em>\n";
+						}
+						?>
 				</td>
 			</tr>
 			<?php

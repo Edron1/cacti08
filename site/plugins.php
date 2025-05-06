@@ -245,7 +245,8 @@ function update_check_if_newer() {
 }
 
 function plugins_temp_table_exists($table) {
-	return sizeof(db_fetch_row("SHOW TABLES LIKE '$table'"));
+    $result = db_fetch_row("SHOW TABLES LIKE '$table'");
+    return is_array($result) && sizeof($result) > 0;
 }
 
 function plugins_load_temp_table() {

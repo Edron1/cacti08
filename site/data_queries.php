@@ -176,25 +176,25 @@ function form_save() {
 						input_validate_input_number($data_template_rrd_id);
 						/* ==================================================== */
 
-						db_execute ("replace into snmp_query_graph_rrd (snmp_query_graph_id,data_template_id,data_template_rrd_id,snmp_field_name) values($snmp_query_graph_id,$data_template_id,$data_template_rrd_id," . $cnn_id->qstr($_POST{"dsdt_" . $data_template_id . "_" . $data_template_rrd_id . "_snmp_field_output"}) . ")");
-					}elseif ((preg_match("/^svds_([0-9]+)_x/i", $var, $matches)) && (!empty($_POST{"svds_" . $matches[1] . "_text"})) && (!empty($_POST{"svds_" . $matches[1] . "_field"}))) {
+						db_execute ("replace into snmp_query_graph_rrd (snmp_query_graph_id,data_template_id,data_template_rrd_id,snmp_field_name) values($snmp_query_graph_id,$data_template_id,$data_template_rrd_id," . $cnn_id->qstr($_POST["dsdt_" . $data_template_id . "_" . $data_template_rrd_id . "_snmp_field_output"]) . ")");
+					}elseif ((preg_match("/^svds_([0-9]+)_x/i", $var, $matches)) && (!empty($_POST["svds_" . $matches[1] . "_text"])) && (!empty($_POST["svds_" . $matches[1] . "_field"]))) {
 						/* suggested values -- data templates */
 
 						/* ================= input validation ================= */
 						input_validate_input_number($matches[1]);
 						/* ==================================================== */
 
-						$sequence = get_sequence(0, "sequence", "snmp_query_graph_rrd_sv", "snmp_query_graph_id=" . $_POST["id"]  . " and data_template_id=" . $matches[1] . " and field_name=" . $cnn_id->qstr($_POST{"svds_" . $matches[1] . "_field"}));
+						$sequence = get_sequence(0, "sequence", "snmp_query_graph_rrd_sv", "snmp_query_graph_id=" . $_POST["id"]  . " and data_template_id=" . $matches[1] . " and field_name=" . $cnn_id->qstr($_POST["svds_" . $matches[1] . "_field"]));
 						$hash = get_hash_data_query(0, "data_query_sv_data_source");
-						db_execute("insert into snmp_query_graph_rrd_sv (hash,snmp_query_graph_id,data_template_id,sequence,field_name,text) values ('$hash'," . $_POST["id"] . "," . $matches[1] . ",$sequence," . $cnn_id->qstr($_POST{"svds_" . $matches[1] . "_field"}) . "," . $cnn_id->qstr($_POST{"svds_" . $matches[1] . "_text"}) . ")");
+						db_execute("insert into snmp_query_graph_rrd_sv (hash,snmp_query_graph_id,data_template_id,sequence,field_name,text) values ('$hash'," . $_POST["id"] . "," . $matches[1] . ",$sequence," . $cnn_id->qstr($_POST["svds_" . $matches[1] . "_field"]) . "," . $cnn_id->qstr($_POST["svds_" . $matches[1] . "_text"]) . ")");
 
 						$redirect_back = true;
 						clear_messages();
-					}elseif ((preg_match("/^svg_x/i", $var)) && (!empty($_POST{"svg_text"})) && (!empty($_POST{"svg_field"}))) {
+					}elseif ((preg_match("/^svg_x/i", $var)) && (!empty($_POST["svg_text"])) && (!empty($_POST["svg_field"]))) {
 						/* suggested values -- graph templates */
-						$sequence = get_sequence(0, "sequence", "snmp_query_graph_sv", "snmp_query_graph_id=" . $_POST["id"] . " and field_name=" . $cnn_id->qstr($_POST{"svg_field"}));
+						$sequence = get_sequence(0, "sequence", "snmp_query_graph_sv", "snmp_query_graph_id=" . $_POST["id"] . " and field_name=" . $cnn_id->qstr($_POST["svg_field"]));
 						$hash = get_hash_data_query(0, "data_query_sv_graph");
-						db_execute("insert into snmp_query_graph_sv (hash,snmp_query_graph_id,sequence,field_name,text) values ('$hash'," . $_POST["id"] . ",$sequence," . $cnn_id->qstr($_POST{"svg_field"}) . "," . $cnn_id->qstr($_POST{"svg_text"}) . ")");
+						db_execute("insert into snmp_query_graph_sv (hash,snmp_query_graph_id,sequence,field_name,text) values ('$hash'," . $_POST["id"] . ",$sequence," . $cnn_id->qstr($_POST["svg_field"]) . "," . $cnn_id->qstr($_POST["svg_text"]) . ")");
 
 						$redirect_back = true;
 						clear_messages();
@@ -251,7 +251,7 @@ function form_actions() {
 
 	include_once("./include/top_header.php");
 
-	html_start_box("<strong>" . $dq_actions{$_POST["drp_action"]} . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
+	html_start_box("<strong>" . $dq_actions[$_POST["drp_action"]] . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
 
 	print "<form action='data_queries.php' method='post'>\n";
 

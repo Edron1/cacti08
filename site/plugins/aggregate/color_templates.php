@@ -147,7 +147,7 @@ function aggregate_color_form_actions() {
 	include_once($config['include_path'] . "/top_header.php");
 
 	print "<form action='color_templates.php' method='post'>\n";
-	html_start_box("<strong>" . $aggregate_actions{$_POST["drp_action"]} . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
+	html_start_box("<strong>" . $aggregate_actions[$_POST["drp_action"]] . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
 
 	if (isset($color_array) && sizeof($color_array)) {
 	if ($_POST["drp_action"] == "1") { /* delete */

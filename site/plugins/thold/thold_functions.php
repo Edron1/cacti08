@@ -2235,7 +2235,7 @@ function get_current_value($rra, $ds, $cdef = 0) {
 	$step = $data_template_data['rrd_step'];
 
 	// Round down to the nearest 100
-	$last_time_entry = (intval($last_time_entry /100) * 100) - $step;
+	$last_time_entry = (intval(intval($last_time_entry) / 100) * 100) - $step;
 	$last_needed = $last_time_entry + $step;
 
 	$result = rrdtool_function_fetch($rra, trim($last_time_entry), trim($last_needed));

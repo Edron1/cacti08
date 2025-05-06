@@ -379,7 +379,7 @@ function draw_aggregate_graph_items_list($_graph_id) {
 			/* graph grouping display logic */
 			$this_row_style = ""; $use_custom_row_color = false; $hard_return = "";
 
-			if ($graph_item_types{$item["graph_type_id"]} != "GPRINT") {
+			if ($graph_item_types[$item["graph_type_id"]] != "GPRINT") {
 				$this_row_style = "font-weight: bold;"; $use_custom_row_color = true;
 
 				if ($group_counter % 2 == 0) {

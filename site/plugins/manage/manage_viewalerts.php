@@ -222,7 +222,11 @@ define("MAX_DISPLAY_PAGES", 21);
 	html_start_box("<strong>Device</strong>", "98%", $colors["header"], "3", "center", "");
 //	include("inc_device_filter_table.php");
 
-  $result = mysql_query($sql);
+	if (!empty($sql)) {
+		$result = mysql_query($sql);
+	} else {
+		cacti_log("Пустой SQL-запрос в manage_viewalerts.php на строке 225", false, "MANAGE");
+	}
 ////////////////////////////////  $row = mysql_fetch_array($result, MYSQL_ASSOC);
 
 	?>
