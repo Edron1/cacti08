@@ -41,8 +41,8 @@
 /* make sure these values refect your actual database/host/user/password */
 /* database_type "mysql" is deprecated in php7 */ 
 $database_type = "mysql";
-$database_default = "cacti";
-$database_hostname = "127.127.126.30";
+$database_default = "cacti-export";
+$database_hostname = "127.0.0.1";
 $database_username = "root";
 $database_password = "";
 $database_port = "3306";
@@ -58,7 +58,7 @@ $database_ssl = false;
    consistently. Using an empty path makes all links relative.
 */
 //$url_path = "/cacti/";
-$url_path = "/";
+$url_path = "/cacti08/site/";
 
 /* Default session name - Session name must contain alpha characters */
 //$cacti_session_name = "Cacti";

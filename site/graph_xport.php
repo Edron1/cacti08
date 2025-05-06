@@ -88,7 +88,7 @@ $graph_info = db_fetch_row("SELECT * FROM graph_templates_graph WHERE local_grap
 $xport_meta = array();
 
 /* Get graph export */
-$xport_array = @rrdtool_function_xport($_GET["local_graph_id"], get_request_var("rra_id"), $graph_data_array, $xport_meta);
+$xport_array = @rrdtool_function_xport($_GET["local_graph_id"], get_request_var("rra_id"), $graph_data_array, $xport_meta);;
 
 /* Make graph title the suggested file name */
 if (is_array($xport_array["meta"])) {
@@ -108,14 +108,17 @@ if (!isset($_GET["stdout"])) {
 }
 
 if (is_array($xport_array["meta"])) {
-	print '"Title:","'          . $xport_array["meta"]["title_cache"]                . '"' . "\n";
-	print '"Vertical Label:","' . $xport_array["meta"]["vertical_label"]             . '"' . "\n";
+	print_r($graph_info);
+	print "===================\n";
+	print_r($xport_array);
+	print '"Title:","'          . $xport_array["meta"]["title_cache"]                       . '"' . "\n";
+	print '"Vertical Label:","' . $xport_array["meta"]["vertical_label"]                    . '"' . "\n";
 	print '"Start Date:","'     . date("Y-m-d H:i:s", $xport_array["meta"]["start"]) . '"' . "\n";
 	print '"End Date:","'       . date("Y-m-d H:i:s", $xport_array["meta"]["end"])   . '"' . "\n";
-	print '"Step:","'           . $xport_array["meta"]["step"]                       . '"' . "\n";
-	print '"Total Rows:","'     . $xport_array["meta"]["rows"]                       . '"' . "\n";
-	print '"Graph ID:","'       . $xport_array["meta"]["local_graph_id"]             . '"' . "\n";
-	print '"Host ID:","'        . $xport_array["meta"]["host_id"]                    . '"' . "\n";
+	print '"Step:","'           . $xport_array["meta"]["step"]                              . '"' . "\n";
+	print '"Total Rows:","'     . $xport_array["meta"]["rows"]                              . '"' . "\n";
+	print '"Graph ID:","'       . $xport_array["meta"]["local_graph_id"]                    . '"' . "\n";
+	print '"Host ID:","'        . $xport_array["meta"]["host_id"]                           . '"' . "\n";
 
 	if (isset($xport_meta["NthPercentile"])) {
 		foreach($xport_meta["NthPercentile"] as $item) {

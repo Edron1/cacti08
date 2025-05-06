@@ -2091,7 +2091,7 @@ function ReadConfig($input, $is_include=FALSE)
 							{
 								$index = constant($m[2]);
 								$key = $m[1];
-								$curobj->[$key][$index] = $val;
+								$curobj[$key][$index] = $val;
 							}
 							else
 							{

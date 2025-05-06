@@ -145,6 +145,10 @@ case 'zoom':
 	/* fetch information for the current RRA */
 	$rra = db_fetch_row("select id,timespan,steps,name from rra where id=" . $_REQUEST["rra_id"]);
 
+    /*if (!is_array($rra)) {
+        die("Error: RRA_ID " . htmlspecialchars($_REQUEST["rra_id"]) . " nor finded.");
+    }*/
+
 	/* define the time span, which decides which rra to use */
 	$timespan = -($rra["timespan"]);
 
@@ -234,7 +238,7 @@ case 'zoom':
 				</tr>
 				<tr>
 					<td colspan='2' align='center'>
-						<strong><?php print htmlspecialchars($rra["name"]);?></strong>
+						<strong><?php print htmlspecialchars($rra["name"] ?? '');?></strong>
 					</td>
 				</tr>
 			</table>
