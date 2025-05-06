@@ -181,7 +181,7 @@ function html_graph_thumbnail_area(&$graph_array, $no_graphs_message = "", $extr
 	global $config;
 	$i = 0; $k = 0; $j = 0;
 
-	$num_graphs = sizeof($graph_array);
+	$num_graphs = is_array($graph_array) ? sizeof($graph_array) : 0;
 
 	if ($num_graphs > 0) {
 		if ($header != "") {
