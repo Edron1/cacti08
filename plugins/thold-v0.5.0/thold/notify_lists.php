@@ -302,7 +302,7 @@ function form_actions() {
 
 		include_once("./include/top_header.php");
 
-		html_start_box("<strong>" . $actions{$_POST["drp_action"]} . " $list_name</strong>", "60%", $colors["header_panel"], "3", "center", "");
+		html_start_box("<strong>" . $actions[$_POST["drp_action"]] . " $list_name</strong>", "60%", $colors["header_panel"], "3", "center", "");
 
 		print "<form action='notify_lists.php' method='post'>\n";
 
@@ -357,7 +357,7 @@ function form_actions() {
 
 		include_once("./include/top_header.php");
 
-		html_start_box("<strong>" . $assoc_actions{$_POST["drp_action"]} . " Threshold Template(s)</strong>", "60%", $colors["header_panel"], "3", "center", "");
+		html_start_box("<strong>" . $assoc_actions[$_POST["drp_action"]] . " Threshold Template(s)</strong>", "60%", $colors["header_panel"], "3", "center", "");
 
 		print "<form action='notify_lists.php' method='post'>\n";
 
@@ -417,7 +417,7 @@ function form_actions() {
 
 		include_once("./include/top_header.php");
 
-		html_start_box("<strong>" . $assoc_actions{$_POST["drp_action"]} . " Threshold(s)</strong>", "60%", $colors["header_panel"], "3", "center", "");
+		html_start_box("<strong>" . $assoc_actions[$_POST["drp_action"]] . " Threshold(s)</strong>", "60%", $colors["header_panel"], "3", "center", "");
 
 		print "<form action='notify_lists.php' method='post'>\n";
 
@@ -477,7 +477,7 @@ function form_actions() {
 
 		include_once("./include/top_header.php");
 
-		html_start_box("<strong>" . $assoc_actions{$_POST["drp_action"]} . " Host(s)</strong>", "60%", $colors["header_panel"], "3", "center", "");
+		html_start_box("<strong>" . $assoc_actions[$_POST["drp_action"]] . " Host(s)</strong>", "60%", $colors["header_panel"], "3", "center", "");
 
 		print "<form action='notify_lists.php' method='post'>\n";
 
@@ -1887,9 +1887,9 @@ function tholds_old() {
 	}
 	html_end_box(false);
 
-	form_hidden_box("action", "edit");
-	form_hidden_box("id", get_request_var_request("id"));
-	form_hidden_box("save_associate", "1");
+	form_hidden_box("action", "edit", "");
+	form_hidden_box("id", get_request_var_request("id"), "");
+	form_hidden_box("save_associate", "1", "");
 
 	/* draw the dropdown containing a list of available actions for this form */
 	draw_actions_dropdown($assoc_actions);

@@ -25,7 +25,7 @@
 
 function thold_poller_bottom () {
 	/* record the start time */
-	list($micro,$seconds) = split(" ", microtime());
+	list($micro, $seconds) = explode(" ", microtime());
 	$start = $seconds + $micro;
 
 	/* perform all thold checks */
@@ -34,7 +34,7 @@ function thold_poller_bottom () {
 	thold_cleanup_log ();
 
 	/* record the end time */
-	list($micro,$seconds) = split(" ", microtime());
+	list($micro, $seconds) = explode(" ", microtime());
 	$end = $seconds + $micro;
 
 	$total_hosts = db_fetch_cell("SELECT count(*) FROM host WHERE disabled=''");
