@@ -1228,7 +1228,7 @@ function grow_right_pane_tree($tree_id, $leaf_id, $host_group_data) {
 		}
 	}
 
-	$total_rows = sizeof($graph_list);
+	$total_rows = count((array)$graph_list);
 
 	/* generate page list */
 	if ($total_rows > get_request_var_request("graphs")) {

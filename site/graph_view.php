@@ -779,7 +779,7 @@ case 'list':
 	html_header_checkbox(array("Graph Title", "Graph Size"), false);
 
 	$i = 0;
-	if (sizeof($graphs)) {
+	if (!empty($graphs)) {
 		foreach ($graphs as $graph) {
 			form_alternate_row_color($colors["alternate"], $colors["light"], $i, 'line' . $graph["local_graph_id"]); $i++;
 			form_selectable_cell("<strong><a href='" . htmlspecialchars("graph.php?local_graph_id=" . $graph["local_graph_id"] . "&rra_id=all") . "'>" . htmlspecialchars($graph["title_cache"]) . "</a></strong>", $graph["local_graph_id"]);

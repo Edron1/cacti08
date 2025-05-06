@@ -87,20 +87,38 @@ function thold_version () {
 	return plugin_thold_version();
 }
 
-function thold_check_upgrade () {
-	global $config;
-	// Let's only run this check if we are on a page that actually needs the data
-	$files = array('thold.php', 'thold_graph.php', 'thold_templates.php', 'listthold.php', 'poller.php');
-	if (isset($_SERVER['PHP_SELF']) && !in_array(basename($_SERVER['PHP_SELF']), $files))
-		return;
-	$current = plugin_thold_version ();
-	$current = $current['version'];
-	$old = read_config_option('plugin_thold_version', TRUE);
-	if ($current != $old) {
-		include_once($config['base_path'] . '/plugins/thold/includes/database.php');
-		thold_upgrade_database ();
-	}
+// function thold_check_upgrade () {
+// 	global $config;
+// 	// Let's only run this check if we are on a page that actually needs the data
+// 	$files = array('thold.php', 'thold_graph.php', 'thold_templates.php', 'listthold.php', 'poller.php');
+// 	if (isset($_SERVER['PHP_SELF']) && !in_array(basename($_SERVER['PHP_SELF']), $files))
+// 		return;
+// 	$current = plugin_thold_version ();
+// 	$current = $current['version'];
+// 	$old = read_config_option('plugin_thold_version', TRUE);
+// 	if ($current != $old) {
+// 		include_once($config['base_path'] . '/plugins/thold/includes/database.php');
+// 		thold_upgrade_database ();
+// 	}
+// }
+function thold_check_upgrade() {
+    global $config;
+    
+    // Проверка текущей версии
+    $current = plugin_thold_version();
+    $current = $current['version'];
+    $old = read_config_option('plugin_thold_version', TRUE);
+
+    // Убираем обновление, если версии совпадают
+    if ($current == $old) {
+        return;
+    }
+
+    // Отключаем обновление базы данных, не вызываем thold_upgrade_database()
+    // include_once($config['base_path'] . '/plugins/thold/includes/database.php');
+    // thold_upgrade_database();
 }
+
 
 function thold_check_dependencies() {
 	global $plugins, $config;
