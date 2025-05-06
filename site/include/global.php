@@ -32,8 +32,8 @@
 
 /* Default database settings*/
 $database_type = "mysql";
-$database_default = "cacti-export";
-$database_hostname = "127.0.0.1";
+$database_default = "cacti";
+$database_hostname = "127.127.126.30";
 $database_username = "root";
 $database_password = "";
 $database_port = "3306";

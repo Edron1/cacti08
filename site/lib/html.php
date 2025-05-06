@@ -659,9 +659,9 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 function draw_menu($user_menu = "") {
 	global $colors, $config, $user_auth_realms, $user_auth_realm_filenames, $menu;
 
-	if (strlen($user_menu == 0)) {
+	if (empty($user_menu)) {
 		$user_menu = $menu;
-	}
+	}	
 
 	/* list all realms that this user has access to */
 	if (read_config_option("auth_method") != 0) {
