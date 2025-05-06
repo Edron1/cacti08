@@ -58,10 +58,12 @@ function thold_display_rusage() {
 			$s_s      = $thold_start_rusage["ru_nswap"];
 			$s_pf     = $thold_start_rusage["ru_majflt"];
 
-			list($micro,$seconds) = split(" ", $thold_start_rusage["microtime"]);
+			list($micro, $seconds) = explode(" ", $thold_start_rusage["microtime"]);
 			$start_time = $seconds + $micro;
-			list($micro,$seconds) = split(" ", microtime());
-			$end_time   = $seconds + $micro;
+
+			list($micro, $seconds) = explode(" ", microtime());
+			$end_time = $seconds + $micro;
+
 
 			$utime    = ($dat["ru_utime.tv_sec"] + ($dat["ru_utime.tv_usec"] * 1E-6)) - $i_u_time;
 			$stime    = ($dat["ru_stime.tv_sec"] + ($dat["ru_stime.tv_usec"] * 1E-6)) - $i_s_time;
@@ -199,6 +201,7 @@ function thold_expression_math_rpn($operator, &$stack) {
 	case 'EXP':
 	case 'LOG':
 		$v1 = thold_expression_rpn_pop($stack);
+		$v2 = 'U';
 
 		if (!$rpn_error) {
 			eval("\$v2 = " . $operator . "(" . $v1 . ");");
@@ -503,14 +506,14 @@ function thold_expression_specialtype_rpn($operator, &$stack, $rra_id, $currentv
 		array_push($stack, $currentval);
 		break;
 	case 'CURRENT_GRAPH_MAXIMUM_VALUE':
-		array_push(get_current_value($rra_id, 'upper_limit', 0));
+		array_push($stack, get_current_value($rra_id, 'upper_limit', 0));
 		break;
 	case 'CURRENT_GRAPH_MINIMUM_VALUE':
-		array_push(get_current_value($rra_id, 'lower_limit', 0));
+		array_push($stack, get_current_value($rra_id, 'lower_limit', 0));
 		break;
 	case 'CURRENT_DS_MINIMUM_VALUE':
-		array_push(get_current_value($rra_id, 'rrd_minimum', 0));
-		break;
+		array_push($stack, get_current_value($rra_id, 'rrd_minimum', 0));
+		break;		
 	case 'CURRENT_DS_MAXIMUM_VALUE':
 		array_push($stack, get_current_value($rra_id, 'rrd_maximum', 0));
 		break;
@@ -3017,40 +3020,75 @@ function thold_threshold_disable($id) {
  * @param unknown_type $png_data    the png image as a stream
  * @return unknown                    the jpeg image as a stream
  */
-function png2jpeg ($png_data) {
-	global $config;
-	$ImageData = '';
-	if ($png_data != "") {
-		$fn = "/tmp/" . time() . '.png';
+// function png2jpeg ($png_data) {
+// 	global $config;
+// 	$ImageData = '';
+// 	if ($png_data != "") {
+// 		$fn = "/tmp/" . time() . '.png';
 
-		/* write rrdtool's png file to scratch dir */
-		$f = fopen($fn, 'wb');
-		fwrite($f, $png_data);
-		fclose($f);
+// 		/* write rrdtool's png file to scratch dir */
+// 		$f = fopen($fn, 'wb');
+// 		fwrite($f, $png_data);
+// 		fclose($f);
 
-		/* create php-gd image object from file */
-		$im = imagecreatefrompng($fn);
-		if (!$im) {
-			/* check for errors */
-			$im = ImageCreate (150, 30);
-			/* create an empty image */
-			$bgc = ImageColorAllocate ($im, 255, 255, 255);
-			$tc  = ImageColorAllocate ($im, 0, 0, 0);
-			ImageFilledRectangle ($im, 0, 0, 150, 30, $bgc);
-			/* print error message */
-			ImageString($im, 1, 5, 5, "Error while opening: $imgname", $tc);
-		}
+// 		/* create php-gd image object from file */
+// 		$im = imagecreatefrompng($fn);
+// 		if (!$im) {
+// 			/* check for errors */
+// 			$im = ImageCreate (150, 30);
+// 			/* create an empty image */
+// 			$bgc = ImageColorAllocate ($im, 255, 255, 255);
+// 			$tc  = ImageColorAllocate ($im, 0, 0, 0);
+// 			ImageFilledRectangle ($im, 0, 0, 150, 30, $bgc);
+// 			/* print error message */
+// 			ImageString($im, 1, 5, 5, "Error while opening: $imgname", $tc);
+// 		}
 
-		ob_start(); // start a new output buffer to capture jpeg image stream
-		imagejpeg($im);    // output to buffer
-		$ImageData = ob_get_contents(); // fetch image from buffer
-		$ImageDataLength = ob_get_length();
-		ob_end_clean(); // stop this output buffer
-		imagedestroy($im); //clean up
+// 		ob_start(); // start a new output buffer to capture jpeg image stream
+// 		imagejpeg($im);    // output to buffer
+// 		$ImageData = ob_get_contents(); // fetch image from buffer
+// 		$ImageDataLength = ob_get_length();
+// 		ob_end_clean(); // stop this output buffer
+// 		imagedestroy($im); //clean up
 
-		unlink($fn); // delete scratch file
-	}
-	return $ImageData;
+// 		unlink($fn); // delete scratch file
+// 	}
+// 	return $ImageData;
+// }
+function png2jpeg($png_data) {
+    global $config;
+    $ImageData = '';
+    if ($png_data != "") {
+        $fn = "/tmp/" . time() . '.png';
+
+        /* write rrdtool's png file to scratch dir */
+        $f = fopen($fn, 'wb');
+        fwrite($f, $png_data); // Убедитесь, что $png_data — это строка
+        fclose($f);
+
+        /* create php-gd image object from file */
+        $im = imagecreatefrompng($fn);
+        if (!$im) {
+            /* check for errors */
+            $im = ImageCreate(150, 30);
+            /* create an empty image */
+            $bgc = ImageColorAllocate($im, 255, 255, 255);
+            $tc  = ImageColorAllocate($im, 0, 0, 0);
+            ImageFilledRectangle($im, 0, 0, 150, 30, $bgc);
+            /* print error message */
+            ImageString($im, 1, 5, 5, "Error while opening the image", $tc); // Исправили использование переменной
+        }
+
+        ob_start(); // start a new output buffer to capture jpeg image stream
+        imagejpeg($im); // output to buffer
+        $ImageData = ob_get_contents(); // fetch image from buffer
+        $ImageDataLength = ob_get_length();
+        ob_end_clean(); // stop this output buffer
+        imagedestroy($im); //clean up
+
+        unlink($fn); // delete scratch file
+    }
+    return $ImageData;
 }
 
 function get_thold_notification_emails($id) {

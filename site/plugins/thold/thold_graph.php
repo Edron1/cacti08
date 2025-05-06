@@ -830,14 +830,32 @@ function hosts() {
 				print "</td>";
 				?>
 				<td>
-					<?php print (strlen($_REQUEST["filter"]) ? eregi_replace("(" . preg_quote($_REQUEST["filter"]) . ")", "<span style='background-color: #F8D93D;'>\\1</span>", $host["description"]) : $host["description"]);?>
+					<?php
+						if (strlen($_REQUEST["filter"])) {
+							$pattern = "/" . preg_quote($_REQUEST["filter"], "/") . "/i";
+							$replacement = "<span style='background-color: #F8D93D;'>$0</span>";
+							print preg_replace($pattern, $replacement, $host["description"]);
+						} else {
+							print $host["description"];
+						}
+					?>
 				</td>
 				<td width='80'><?php print round(($host["id"]), 2);?></td>
 				<td width='80'><i><?php print $graphs;?></i></td>
 				<td width='80'><i><?php print $ds;?></i></td>
 				<td width='140'><?php print get_uncolored_device_status(($host["disabled"] == "on" ? true : false), $host["status"]);?></td>
 				<td width='100'><?php print round(($host["status_event_count"]), 2);?></td>
-				<td><?php print (strlen($_REQUEST["filter"]) ? eregi_replace("(" . preg_quote($_REQUEST["filter"]) . ")", "<span style='background-color: #F8D93D;'>\\1</span>", $host["hostname"]) : $host["hostname"]);?></td>
+				<td>
+					<?php
+						if (strlen($_REQUEST["filter"])) {
+							$pattern = "/" . preg_quote($_REQUEST["filter"], "/") . "/i";
+							$replacement = "<span style='background-color: #F8D93D;'>$0</span>";
+							print preg_replace($pattern, $replacement, $host["hostname"]);
+						} else {
+							print $host["hostname"];
+						}
+					?>
+				</td>
 				<td width='100'><?php print round(($host["cur_time"]), 2);?></td>
 				<td width='100'><?php print round(($host["avg_time"]), 2);?></td>
 				<td width='100'><?php print round($host["availability"], 2);?></td>
@@ -852,14 +870,32 @@ function hosts() {
 				print "</td>";
 				?>
 				<td>
-					<?php print (strlen($_REQUEST["filter"]) ? eregi_replace("(" . preg_quote($_REQUEST["filter"]) . ")", "<span style='background-color: #F8D93D;'>\\1</span>", $host["description"]) : $host["description"]);?>
+					<?php
+					if (strlen($_REQUEST["filter"])) {
+						$pattern = "/" . preg_quote($_REQUEST["filter"], "/") . "/i";
+						$replacement = "<span style='background-color: #F8D93D;'>$0</span>";
+						print preg_replace($pattern, $replacement, $host["description"]);
+					} else {
+						print $host["description"];
+					}
+					?>
 				</td>
 				<td width='80'><?php print $host["id"];?></td>
 				<td width='80'><i><?php print $graphs;?></i></td>
 				<td width='80'><i><?php print $ds;?></i></td>
 				<td width='140'><?php print "Not Monitored";?></td>
 				<td width='100'><?php print "N/A";?></td>
-				<td><?php print (strlen($_REQUEST["filter"]) ? eregi_replace("(" . preg_quote($_REQUEST["filter"]) . ")", "<span style='background-color: #F8D93D;'>\\1</span>", $host["hostname"]) : $host["hostname"]);?></td>
+				<td>
+					<?php
+					if (strlen($_REQUEST["filter"])) {
+						$pattern = "/" . preg_quote($_REQUEST["filter"], "/") . "/i";
+						$replacement = "<span style='background-color: #F8D93D;'>$0</span>";
+						print preg_replace($pattern, $replacement, $host["hostname"]);
+					} else {
+						print $host["hostname"];
+					}
+					?>
+				</td>
 				<td width='100'><?php print "N/A";?></td>
 				<td width='100'><?php print "N/A";?></td>
 				<td width='100'><?php print "N/A";?></td>

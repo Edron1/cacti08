@@ -47,14 +47,14 @@ function do_thold() {
 
 	$tholds = array();
 	foreach ($_POST as $var => $val) {
-		if (ereg("^chk_(.*)$", $var, $matches)) {
+		if (preg_match("/^chk_(.*)$/", $var, $matches)) {
 			$del = $matches[1];
 			$rra = db_fetch_cell("SELECT rra_id FROM thold_data WHERE id=$del");
-
+	
 			input_validate_input_number($del);
 			$tholds[$del] = $rra;
 		}
-	}
+	}	
 
 	switch ($_POST['drp_action']) {
 		case 1:	// Delete

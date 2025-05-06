@@ -47,14 +47,21 @@ function do_thold() {
 
 	$tholds = array();
 	foreach ($_POST as $var => $val) {
-		if (ereg("^chk_(.*)$", $var, $matches)) {
+		// Проверяем, соответствует ли переменная паттерну
+		if (preg_match("/^chk_(.*)$/", $var, $matches)) {
+			// Если совпадение найдено, сохраняем значение
 			$del = $matches[1];
+			
+			// Получаем rra_id из базы данных
 			$rra = db_fetch_cell("SELECT rra_id FROM thold_data WHERE id=$del");
-
+	
+			// Валидация числа
 			input_validate_input_number($del);
+			
+			// Добавляем в массив $tholds
 			$tholds[$del] = $rra;
 		}
-	}
+	}	
 
 	switch ($_POST['drp_action']) {
 		case 1:	// Delete
