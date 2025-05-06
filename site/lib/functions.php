@@ -1827,8 +1827,17 @@ function draw_navigation_text($type = "url") {
 	$current_action = (isset($_REQUEST["action"]) ? $_REQUEST["action"] : "");
 
 	/* find the current page in the big array */
-	$current_array = $nav[$current_page . ":" . $current_action];
-	$current_mappings = explode(",", $current_array["mapping"]);
+	if (isset($nav[$current_page . ":" . $current_action])) {
+		$current_array = $nav[$current_page . ":" . $current_action];
+	} else {
+		$current_array = [];
+	}
+	
+	if (isset($current_array["mapping"])) {
+		$current_mappings = explode(",", $current_array["mapping"]);
+	} else {
+		$current_mappings = [];
+	}	
 	$current_nav = "";
 	$title       = "";
 
@@ -1863,11 +1872,11 @@ function draw_navigation_text($type = "url") {
 		}
 	}
 
-	$current_nav .= htmlspecialchars(resolve_navigation_variables($current_array["title"]));
-	$title       .= htmlspecialchars(resolve_navigation_variables($current_array["title"]));
+	$current_nav .= htmlspecialchars(resolve_navigation_variables($current_array["title"] ?? ""));
+	$title       .= htmlspecialchars(resolve_navigation_variables($current_array["title"] ?? ""));
 
 	/* keep a cache for each level we encounter */
-	$nav_level_cache[$current_array["level"]] = array("id" => $current_page . ":" . $current_action, "url" => get_browser_query_string());
+	$nav_level_cache[$current_array["level"] ?? "default"] = array("id" => $current_page . ":" . $current_action, "url" => get_browser_query_string());
 	$_SESSION["sess_nav_level_cache"] = $nav_level_cache;
 
 	if ($type == "url") {

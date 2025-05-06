@@ -144,7 +144,7 @@ echo "<pre>";
 
 	include_once("./include/top_header.php");
 
-	html_start_box("<strong>" . $device_actions{$_POST["drp_action"]} . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
+	html_start_box("<strong>" . $device_actions[$_POST["drp_action"]] . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
 	print "<form action='manage_groups.php' method='post'>\n";
 
 	if ($_POST["drp_action"] == "1") { //delete

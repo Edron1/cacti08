@@ -166,13 +166,18 @@ function utilities_php_modules() {
 
 function memory_bytes($val) {
     $val = trim($val);
-    $last = strtolower($val{strlen($val)-1});
+    $last = strtolower($val[strlen($val)-1]);
     switch($last) {
         // The 'G' modifier is available since PHP 5.1.0
         case 'g':
             $val *= 1024;
         case 'm':
-            $val *= 1024;
+            if (is_numeric($val)) {
+				$val *= 1024;
+			} else {
+				$val = 0; // или другое значение по умолчанию
+			}
+			
         case 'k':
             $val *= 1024;
     }
@@ -212,7 +217,7 @@ function utilities_view_tech($php_info = "") {
 	foreach($tables as $table) {
 		$create_syntax = db_fetch_row("SHOW CREATE TABLE " . $table["Tables_in_" . $database_default]);
 
-		if (sizeof($create_syntax)) {
+		if (is_array($create_syntax) && sizeof($create_syntax) > 0) {
 			if (substr_count(strtoupper($create_syntax["Create Table"]), "INNODB")) {
 				$skip_tables[] = $table["Tables_in_" . $database_default];
 			}else{
@@ -307,7 +312,12 @@ function utilities_view_tech($php_info = "") {
 
 	print "<tr bgcolor='#" . $colors["form_alternate1"] . "'>\n";
 	print "		<td class='textArea'>RRDTool Version</td>\n";
-	print "		<td class='textArea'>" . $rrdtool_versions[$rrdtool_version] . " " . $rrdtool_error . "</td>\n";
+	if (isset($rrdtool_versions[$rrdtool_version])) {
+		print "		<td class='textArea'>" . $rrdtool_versions[$rrdtool_version] . " " . $rrdtool_error . "</td>\n";
+	} else {
+		print "		<td class='textArea'>Unknown version " . $rrdtool_error . "</td>\n";
+	}
+	
 	print "</tr>\n";
 	print "<tr bgcolor='#" . $colors["form_alternate2"] . "'>\n";
 	print "		<td class='textArea'>Hosts</td>\n";

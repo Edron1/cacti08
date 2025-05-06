@@ -1086,7 +1086,7 @@ function user() {
 	html_header_sort_checkbox($display_text, get_request_var_request("sort_column"), get_request_var_request("sort_direction"), false);
 
 	$i = 0;
-	if (sizeof($user_list) > 0) {
+	if (!empty($user_list) && is_array($user_list)) {
 		foreach ($user_list as $user) {
 			if (empty($user["dtime"]) || ($user["dtime"] == "12/31/1969")) {
 				$last_login = "N/A";

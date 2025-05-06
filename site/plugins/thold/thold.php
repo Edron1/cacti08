@@ -270,8 +270,8 @@ $thold_item_data = db_fetch_assoc("SELECT *
 $thold_item_data = count($thold_item_data) > 0 ? $thold_item_data[0] : $thold_item_data;
 $thold_item_data_cdef = (isset($thold_item_data['cdef']) ? $thold_item_data['cdef'] : 0);
 
-if ($thold_item_data['template']) {
-	$thold_item_data['template_name'] = db_fetch_cell('SELECT name FROM thold_template WHERE id = ' . $thold_item_data['template']);
+if (isset($thold_item_data['template']) && $thold_item_data['template']) {
+    $thold_item_data['template_name'] = db_fetch_cell('SELECT name FROM thold_template WHERE id = ' . $thold_item_data['template']);
 }
 
 html_start_box("", "100%", $colors["header"], "3", "center", "");

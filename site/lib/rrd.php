@@ -529,9 +529,9 @@ function rrdtool_function_fetch($local_data_id, $start_time, $end_time, $resolut
 		}
 	}
 	/* add nth percentile maximum data source */
-	if (isset($fetch_array["values"][count($fetch_array["data_source_names"])])) {
+	if (isset($fetch_array["data_source_names"]) && isset($fetch_array["values"][count($fetch_array["data_source_names"])])) {
 		$fetch_array["data_source_names"][count($fetch_array["data_source_names"])] = "nth_percentile_maximum";
-	}
+	}	
 
 	/* clear the cache if it gets too big */
 	if (sizeof($rrd_fetch_cache) >= MAX_FETCH_CACHE_SIZE) {
