@@ -15,9 +15,9 @@
 
     <definition>NODES
 
-        <meta>nodename{:compassoffset}[percentage]</meta>
+        <meta>nodename{:compassoffset}{percentage}</meta>
 
-        <meta>nodename{:compassoffset}[percentage]</meta>
+        <meta>nodename{:compassoffset}{percentage}</meta>
     </definition>
 
     <definition>NODES
@@ -29,9 +29,9 @@
 
     <definition>NODES
 
-        <meta>nodename{:angle}r[radius]</meta>
+        <meta>nodename{:angle}r{radius}</meta>
 
-        <meta>nodename{:angle}r[radius]</meta>
+        <meta>nodename{:angle}r{radius}</meta>
     </definition>
 
     <description xmlns="http://www.w3.org/1999/xhtml">
