@@ -10,5 +10,3 @@ my $debug = 0;
 my $success = sendMsg($target_netbios_name, $source_netbios_name, $target_ip, $message, $debug);
 
 print ($success ? "Delivery successfull\n" : "Error in delivery! \n$@\n");
-
-

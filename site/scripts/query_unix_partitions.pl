@@ -31,7 +31,7 @@ while (<DF>) {
 		}elsif (($ARGV[0] eq "get") && ($ARGV[2] eq $1)) {
 			print $output{$ARGV[1]};
 		}elsif ($ARGV[0] eq "query") {
-			print "$output[device]:$output{$ARGV[1]}\n";
+			print "$output{device}:$output{$ARGV[1]}\n";
 		}
 	}
 }

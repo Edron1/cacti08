@@ -1,31 +1,30 @@
-
 my $o;
 
 $o=$ARGV[1];
 if ($ARGV[2] ne "") {
   $o=$o." ".$ARGV[2];
-  }
+}
 if ($ARGV[3] ne "") {
   $o=$o." ".$ARGV[3];
-  }
+}
 if ($ARGV[4] ne "") {
   $o=$o." ".$ARGV[4];
-  }
+}
 if ($ARGV[5] ne "") {
   $o=$o." ".$ARGV[5];
-  }
+}
 if ($ARGV[6] ne "") {
   $o=$o." ".$ARGV[6];
-  }
+}
 if ($ARGV[7] ne "") {
   $o=$o." ".$ARGV[7];
-  }
+}
 if ($ARGV[8] ne "") {
   $o=$o." ".$ARGV[8];
-  }
+}
 if ($ARGV[9] ne "") {
   $o=$o." ".$ARGV[9];
-  }
+}
 
 use strict;
 use Win32::OLE;
@@ -55,18 +54,18 @@ foreach $Service (in $ServiceSet) {
     $extrait = substr($t,$i,1);
     if ($extrait ne "'") {
       if ($extrait ne "�") {
-	    if ($extrait ne "�") {
-	      if ($extrait ne "�") {
-		    $ok=1;
-		  } else {
-		    $replace_space=1;
-		  }
-	    } else {
-	      $replace_space=1;
-	    }
-	  } else {
-	    $replace_space=1;
-	  }
+        if ($extrait ne "�") {
+          if ($extrait ne "�") {
+            $ok=1;
+          } else {
+            $replace_space=1;
+          }
+        } else {
+          $replace_space=1;
+        }
+      } else {
+        $replace_space=1;
+      }
     }
 
     if ($ok eq 1) {
@@ -80,7 +79,6 @@ foreach $Service (in $ServiceSet) {
     }
 
     $precedent = $extrait;
- 
   }
 
   $pid[$j]=$n;
@@ -96,9 +94,7 @@ for $i (0..$j-1) {
 
 if ($ok eq 1) {
   print "up";
-  }
+}
 else {
   print "down";
-  }
-  
-  
+}

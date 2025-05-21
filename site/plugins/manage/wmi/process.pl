@@ -1,16 +1,15 @@
-
 my $o;
 
 $o=$ARGV[1];
 if ($ARGV[2] ne "") {
   $o=$o." ".$ARGV[2];
-  }
+}
 if ($ARGV[3] ne "") {
   $o=$o." ".$ARGV[3];
-  }
+}
 if ($ARGV[4] ne "") {
   $o=$o." ".$ARGV[4];
-  }
+}
 
 $o=lc($o);
 
@@ -41,7 +40,7 @@ for $i (0..$j-1) {
 
 if ($ok eq 1) {
   print "up";
-  }
+}
 else {
   print "down";
-  }
+}

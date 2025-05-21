@@ -8,37 +8,37 @@ while (<CONTENTS>) {
     if (m/id="context_([^"]+)/) { $scope = $1; }
 
     if (m/href="([^"]+)">([^<]+)</) {
-        $map { $scope . '|' . $2 } = $1;
-        $map { $2 } = $1;
-        $words { $2 } = 1;
+        $map{$scope . '|' . $2} = $1;
+        $map{$2} = $1;
+        $words{$2} = 1;
     }
 }
 close(CONTENTS);
 
 # seed the additional stuff that won't otherwise get autolinked.
 foreach $c (qw(AICONFILLCOLOR AICONOUTLINECOLOR LABELFONTCOLOR LABELBGCOLOR LABELOUTLINECOLOR LABELFONTSHADOWCOLOR))
-    {
-    $map { "NODE|$c" } = "#NODE_COLORS";
-    $map { $c } = "#NODE_COLORS";
-    $words { $c } = 1;
+{
+    $map{"NODE|$c"} = "#NODE_COLORS";
+    $map{$c} = "#NODE_COLORS";
+    $words{$c} = 1;
 }
 
 foreach $c (qw(OUTLINECOLOR BWOUTLINECOLOR BWFONTCOLOR BWBOXCOLOR COMMENTFONTCOLOR)) {
-    $map { "LINK|$c" } = "#LINK_COLORS";
-    $map { $c } = "#LINK_COLORS";
-    $words { $c } = 1;
+    $map{"LINK|$c"} = "#LINK_COLORS";
+    $map{$c} = "#LINK_COLORS";
+    $words{$c} = 1;
 }
 
 foreach $c (qw(BGCOLOR TIMECOLOR TITLECOLOR KEYTEXTCOLOR KEYOUTLINECOLOR KEYBGCOLOR)) {
-    $map { "GLOBAL|$c" } = "#GLOBAL_COLORS";
-    $map { $c } = "#GLOBAL_COLORS";
-    $words { $c } = 1;
+    $map{"GLOBAL|$c"} = "#GLOBAL_COLORS";
+    $map{$c} = "#GLOBAL_COLORS";
+    $words{$c} = 1;
 }
 
 foreach $c (qw(TITLEFONT KEYFONT TIMEFONT)) {
-    $map { "GLOBAL|$c" } = "#GLOBAL_FONT";
-    $map { $c } = "#GLOBAL_FONT";
-    $words { $c } = 1;
+    $map{"GLOBAL|$c"} = "#GLOBAL_FONT";
+    $map{$c} = "#GLOBAL_FONT";
+    $words{$c} = 1;
 }
 
 $wholefile = 0;
@@ -63,7 +63,7 @@ while (<STDIN>) {
     if ($indesc && m/\/div>/) { $indesc--; }
 
     if ($indesc || $wholefile) {
-        foreach $word(split(/\s+/, $_)) {
+        foreach $word (split(/\s+/, $_)) {
             $bareword = $word;
             $prefix = "";
 
@@ -76,15 +76,16 @@ while (<STDIN>) {
             if ($bareword ne "") {
                 # print STDERR "|$bareword|$word\n";
 
-                if ($words { $bareword }) {
+                if ($words{$bareword}) {
                     # print "!";
-                    $link = $map { "$scope|$bareword" };
-                    $link ||= $map { $bareword };
+
+                    $link = $map{"$scope|$bareword"};
+                    $link ||= $map{$bareword};
 
                     if ($wholefile) {
-                        $link ||= $map { "GLOBAL|$bareword" };
-                        $link ||= $map { "LINK|$bareword" };
-                        $link ||= $map { "NODE|$bareword" };
+                        $link ||= $map{"GLOBAL|$bareword"};
+                        $link ||= $map{"LINK|$bareword"};
+                        $link ||= $map{"NODE|$bareword"};
                     }
 
                     # if ( ($link ne '') && ($lastseen ne "$[scope]_$[bareword]") ) {
@@ -97,11 +98,14 @@ while (<STDIN>) {
                 }
             }
 
-            if ($word eq 'targets.html')
-                { $word = '<a href="targets.html">targets.html</a>'; }
+            if ($word eq 'targets.html') {
+                $word = '<a href="targets.html">targets.html</a>';
+            }
             print $word . " ";
         }
-    } else { print $_; }
+    } else {
+        print $_;
+    }
 
     if (m/div class="description"/) { $indesc = 1; }
 

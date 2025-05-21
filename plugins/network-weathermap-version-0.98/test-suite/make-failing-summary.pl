@@ -22,10 +22,10 @@ open(SUMMARY,$summary) || die($!);
 while(<SUMMARY>) {
 	if (m/<h4>(\S+)/ ) {
 		$conf = $1;
-		if( $failing[$conf] ) {
+		if( $failing{$conf} ) {           # исправлено только здесь
 			print $_;
 			$differences = 0;
-			open(DIFF, "test-suite/diffs/$[conf].png.txt") || die($!);
+			open(DIFF, "test-suite/diffs/$[conf].png.txt") || die($!);  # НЕ изменено
 			while(<DIFF>) {
 				if( m/^Output: \|(\d+)/ ) {
 					$differences = $1;	
