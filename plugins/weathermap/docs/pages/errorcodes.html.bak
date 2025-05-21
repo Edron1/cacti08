@@ -607,7 +607,7 @@
 
  <dt id="WMWARN70">[WMWARN70]</dt> 
  <dd> 
- <p>"ReadData: {map item} target: {target} on config line {line} of {file} had no valid data, according to {plugin}" </p> 
+ <p>"ReadData: {map item} target: [target] on config line [line] of [file] had no valid data, according to [plugin]" </p> 
  <p> 
  This tells you that for a given <em>map item</em> defined on that line of that config file, there is no data. Weathermap 
  has figured out which datasource plugin should be used, but that plugin was unable to get data for this target. It could 

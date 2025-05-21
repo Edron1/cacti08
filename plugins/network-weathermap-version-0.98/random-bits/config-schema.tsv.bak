@@ -75,7 +75,7 @@ LINK	OVERLIBHEIGHT	{int}
 LINK	OVERLIBWIDTH	{int}					
 LINK	SET	{string}	{string}				
 LINK	SPLITPOS	{int}					
-LINK	TARGET	{targetspec}	…				
+LINK	TARGET	{targetspec}	â€¦				
 LINK	TEMPLATE	linkname					
 LINK	USESCALE	{scalename}					
 LINK	VIA	{nodename}	{int}	{int}			
@@ -104,7 +104,7 @@ NODE	OVERLIBWIDTH	{int}
 NODE	POSITION	{nodename}	{int}	{int}			
 NODE	POSITION	{int}	{int}				
 NODE	SET	{string}	{string}				
-NODE	TARGET	{targetspec}	…				
+NODE	TARGET	{targetspec}	â€¦				
 NODE	TEMPLATE	{nodename}					
 NODE	TEMPLATE	{nodename}					
 NODE	USEICONSCALE	{scalename}	{inorout}				

@@ -167,11 +167,11 @@ if (sizeof($gopts) > 0)
 
 			print "Usage: php weathermap [options]\n\n";
                         
-                        print " --config [filename]      -  filename to read from. Default weathermap.conf\n";
-                        print " --output [filename]      -  filename to write image. Default weathermap.png\n";
-                        print " --htmloutput [filename]  -  filename to write HTML. Default weathermap.html\n\n";
+                        print " --config {filename}      -  filename to read from. Default weathermap.conf\n";
+                        print " --output {filename}      -  filename to write image. Default weathermap.png\n";
+                        print " --htmloutput {filename}  -  filename to write HTML. Default weathermap.html\n\n";
                         
-                        print " --image-uri [uri]        -  URI to prefix <img> tags in HTML.\n";
+                        print " --image-uri {uri}        -  URI to prefix <img> tags in HTML.\n";
                         print " --bulge                  -  Enable link-bulging mode. See manual.\n\n";
 						
 						print " --define name=value      -  Define internal variables\n";
@@ -180,9 +180,9 @@ if (sizeof($gopts) > 0)
                         print " --no-data                -  skip the data-reading process (just a 'grey' map)\n";
                         print " --randomdata            -  as above, but use random data\n";
                         print " --debug                  -  produce (LOTS) of debugging information during run\n";
-						print " --no-warn=[errorcode][,[errorcode]] - suppress warnings with listed errorcodes\n";
+						print " --no-warn={errorcode}[,{errorcode}] - suppress warnings with listed errorcodes\n";
 						print " --dump-after             -  dump all internal PHP structures (HUGE)\n";
-                        print " --dumpconfig [filename]  -  filename to write a new config to (for testing)\n\n";
+                        print " --dumpconfig {filename}  -  filename to write a new config to (for testing)\n\n";
                         
                         print " --help                   -  show this help\n";
                         print " --version                -  show version number\n\n";

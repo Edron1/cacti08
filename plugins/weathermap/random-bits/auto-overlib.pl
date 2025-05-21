@@ -60,7 +60,7 @@ print "\nNew config file is saved in $outputfile\n";
 sub find_graph_urls {
     my ($target) = shift;
 
-    # $dbh is global
+	# $dbh is global
     my ( @bits, $SQL, $sth, $data );
     my ( $data_template_id, $local_data_id, $count,     $output );
     my ( $local_graph_id,   $title,         $graph_url, $graphpage_url );
@@ -74,7 +74,7 @@ sub find_graph_urls {
     $sth = $dbh->prepare($SQL);
     $sth->execute();
     $data          = $sth->fetchrow_hashref();
-    $local_data_id = $data->{local_data_id};
+    $local_data_id = $$data{local_data_id};
     $sth->finish();
 
     $SQL =
@@ -82,7 +82,7 @@ sub find_graph_urls {
     $sth = $dbh->prepare($SQL);
     $sth->execute();
     $data                 = $sth->fetchrow_hashref();
-    $data_template_rrd_id = $data->{id};
+    $data_template_rrd_id = $$data{id};
     $sth->finish();
 
     $SQL =
@@ -92,8 +92,8 @@ sub find_graph_urls {
     $count  = 0;
     $output = "";
     while ( $data = $sth->fetchrow_hashref() ) {
-        $local_graph_id = $data->{local_graph_id};
-        $title          = $data->{title_cache};
+        $local_graph_id = $$data{local_graph_id};
+        $title          = $$data{title_cache};
         $graph_url      = sprintf( $cacti_graph, $local_graph_id );
         $graphpage_url  = sprintf( $cacti_graphpage, $local_graph_id );
         $output .= "\t# POSSIBLE OVERLIBGRAPH ($title) \n";

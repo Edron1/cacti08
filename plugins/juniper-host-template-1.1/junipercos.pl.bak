@@ -45,7 +45,7 @@ if ($ARGV[2] eq "get"){
 
 foreach $line(@walk) {
     ($crap, $id_int) = split(/:/, $line);
-    ($get_iftype)= &snmpget("$comm\@$ip:161:1:2",$opt{iftype}.$id_int);
+    ($get_iftype)= &snmpget("$comm\@$ip:161:1:2",$opt[iftype].$id_int);
 	if ($get_iftype eq "6"){
 	    push (@id_int,$id_int);
 	}

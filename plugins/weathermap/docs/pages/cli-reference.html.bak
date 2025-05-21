@@ -51,7 +51,7 @@
                     <tt>./weathermap [--config <i>configfile</i>] [--output
                     <i>pngfile</i>] [--htmloutput <i>htmlfile</i>] [--image-uri
                     <i>URI</i>] [--debug] [--dumpafter] [--dumpconfig
-                    <i>newconfigfile</i>] [--sizedebug] [--define var=value] [--no-warn={errorcodes}</tt>
+                    <i>newconfigfile</i>] [--sizedebug] [--define var=value] [--no-warn=[errorcodes]</tt>
                 </div>As you can see,
                 <i>all</i> the parameters are optional! By default the script will look
                 for a configuration file called

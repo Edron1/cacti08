@@ -24,10 +24,10 @@ while (<INDEX>) {
 
     if (m/xi:include\s+href\s*=\s*"([^"]+)"/) {
         $target = $1;
-        $seen { $target } = 1;
+        $seen {$target} = 1;
     }
 }
 
 foreach $file (@bits) {
-    if ($seen { $file } == 0) { print "$file is not referenced.\n"; }
+    if ($seen {$file} == 0) { print "$file is not referenced.\n"; }
 }
