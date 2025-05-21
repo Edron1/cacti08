@@ -5827,7 +5827,7 @@
 	<hash_030021480733068aa6c9a45cc9b12622f3d14f>
 		<name>Unix - Count Oids</name>
 		<type_id>1</type_id>
-		<input_string>/usr/bin/snmpwalk &lt;ip&gt; -Cc -v &lt;ver&gt; -c &lt;comm&gt; &lt;oid&gt; | /bin/wc -l | /bin/awk &#039;[printf$0]&#039;</input_string>
+		<input_string>/usr/bin/snmpwalk &lt;ip&gt; -Cc -v &lt;ver&gt; -c &lt;comm&gt; &lt;oid&gt; | /bin/wc -l | /bin/awk &#039;{printf$0}&#039;</input_string>
 		<fields>
 			<hash_0700218151cb35073c7b90c6985b780dc234c5>
 				<name>SNMP Oid Tree</name>
